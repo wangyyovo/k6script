@@ -5,11 +5,11 @@ import { check } from 'k6';
 import http from 'k6/http';
 
 let body = readlocalFile(__ENV.body);
-let proto_paths = __ENV.proto_paths;
+let proto_path = __ENV.proto_path;
 let proto_file = __ENV.proto_file;
-console.log(proto_paths);
+
 const client = new grpc.Client();
-client.load(parseProtoPath(proto_paths), proto_file);
+client.load(parseProtoPath(proto_path), proto_file);
 const grpcReqConnectingTrend = new Trend('grpc_req_connecting', true);
 
 
