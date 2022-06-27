@@ -5,11 +5,11 @@ import { check } from 'k6';
 import http from 'k6/http';
 
 let body = readlocalFile(__ENV.body);
-let proto_dir = __ENV.proto_dir;
+let proto_paths = __ENV.proto_paths;
 let proto_file = __ENV.proto_file;
 
 const client = new grpc.Client();
-client.load(parseProtoPath(proto_dir), proto_file);
+client.load(parseProtoPath(proto_paths), proto_file);
 const grpcReqConnectingTrend = new Trend('grpc_req_connecting', true);
 
 
@@ -80,6 +80,5 @@ function parseProtoPath(paths) {
     result[index] = __ENV.cur_dir + dirs[index];
   }
 
-  console.log(result);
   return result;
 }
