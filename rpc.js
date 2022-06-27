@@ -11,7 +11,7 @@ let proto_file = __ENV.proto_file;
 
 
 const client = new grpc.Client();
-client.load(proto_path.split(','), proto_file);
+client.load(parseProtoPath(proto_path), proto_file);
 const grpcReqConnectingTrend = new Trend('grpc_req_connecting', true);
 
 
@@ -77,9 +77,9 @@ function readRemoteFile(fileName) {
   return body
 }
 
-function parseProtoPath() {
+function parseProtoPath(paths) {
   let result = [];
-  let dirs = proto_path.split(',');
+  let dirs = paths.split(',');
 
   for (let index = 0; index < dirs.length; index++) {
     result[index] = __ENV.cur_dir + dirs[index];
