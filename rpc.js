@@ -16,9 +16,6 @@ const grpcReqConnectingTrend = new Trend('grpc_req_connecting', true);
 
 
 export function setup() {
-  parseProtoPath();
-
-
   body = body || readRemoteFile(__ENV.body)
   let url = __ENV.url;
   let address = __ENV.address;
