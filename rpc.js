@@ -7,10 +7,8 @@ import http from 'k6/http';
 let body = readlocalFile(__ENV.body);
 let proto_path = __ENV.proto_path;
 let proto_file = __ENV.proto_file;
-//const cur_dir = __ENV.cur_dir
-console.log(__ENV.cur_dir)
 
-
+parseProtoPath(proto_path);
 const client = new grpc.Client();
 client.load(parseProtoPath(proto_path), proto_file);
 const grpcReqConnectingTrend = new Trend('grpc_req_connecting', true);
