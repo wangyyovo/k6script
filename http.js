@@ -55,6 +55,7 @@ export default function (data) {
 function readlocalFile(fileName) {
   let body;
   if ((fileName.indexOf("http://")==-1) && (fileName.indexOf("https://")==-1)) {
+    fileName = `${__ENV.cur_dir}/${fileName}`
     body = JSON.parse(open(fileName));
   }
   return body
