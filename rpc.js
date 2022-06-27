@@ -8,6 +8,7 @@ let body = readlocalFile(__ENV.body);
 let proto_path = __ENV.proto_path;
 let proto_file = __ENV.proto_file;
 //const cur_dir = __ENV.cur_dir
+console.log(__ENV.cur_dir)
 
 
 const client = new grpc.Client();
@@ -57,7 +58,7 @@ export function teardown () {
 
 function readlocalFile(fileName) {
   let body;
-  fileName =  __ENV.cur_dir + fileName
+  fileName = `${__ENV.cur_dir}/${fileName}`
   if ((fileName.indexOf("http://")==-1) && (fileName.indexOf("https://")==-1)) {
     body = JSON.parse(open(fileName));
   }
