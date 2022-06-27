@@ -7,6 +7,7 @@ import http from 'k6/http';
 let body = readlocalFile(__ENV.body);
 let proto_path = __ENV.proto_path;
 let proto_file = __ENV.proto_file;
+//const cur_dir = __ENV.cur_dir
 
 
 const client = new grpc.Client();
@@ -15,6 +16,8 @@ const grpcReqConnectingTrend = new Trend('grpc_req_connecting', true);
 
 
 export function setup() {
+  parseProtoPath();
+
 
   body = body || readRemoteFile(__ENV.body)
   let url = __ENV.url;
@@ -57,6 +60,7 @@ export function teardown () {
 
 function readlocalFile(fileName) {
   let body;
+  fileName =  __ENV.cur_dir + fileName
   if ((fileName.indexOf("http://")==-1) && (fileName.indexOf("https://")==-1)) {
     body = JSON.parse(open(fileName));
   }
@@ -71,4 +75,16 @@ function readRemoteFile(fileName) {
     body = resp.body;
   }
   return body
+}
+
+function parseProtoPath() {
+  let result = [];
+  let dirs = proto_path.split(',');
+
+  for (let index = 0; index < dirs.length; index++) {
+    result[index] = __ENV.cur_dir + dirs[index];
+  }
+
+  console.log(result);
+  return result;
 }
