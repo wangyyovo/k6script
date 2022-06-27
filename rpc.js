@@ -83,5 +83,6 @@ function parseProtoPath(paths) {
     result[index] = __ENV.cur_dir + dirs[index];
   }
 
+  console.log(result);
   return result;
 }
