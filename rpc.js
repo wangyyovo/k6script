@@ -30,7 +30,7 @@ export function setup() {
 
 export const options = {
   vus: __ENV.vus,
-  duration: __ENV.duration,
+  //duration: __ENV.duration,
   iterations: __ENV.iterations,
   // discardResponseBodies: true,
   summaryTrendStats: ['avg', 'min', 'med', 'max', 'p(90)', 'p(95)', 'p(99)', 'p(99.9)', 'count'],
