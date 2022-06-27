@@ -79,6 +79,8 @@ function parseProtoPath(paths) {
   for (let index = 0; index < dirs.length; index++) {
     result[index] = __ENV.cur_dir + dirs[index];
   }
+  
+  result[result.lenth] =`${__ENV.cur_dir}/third_party}`
 
   return result;
 }
