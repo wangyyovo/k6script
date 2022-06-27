@@ -17,9 +17,9 @@ const grpcReqConnectingTrend = new Trend('grpc_req_connecting', true);
 export function setup() {
 
 
-  console.log(__ENV.vus);
-  console.log(__ENV.duration);
-  console.log(__ENV.iterations);
+  console.log(__ENV.VUS);
+  console.log(__ENV.DURATION);
+  console.log(__ENV.ITERATIONS);
 
   body = body || readRemoteFile(__ENV.body)
   let url = __ENV.url;
@@ -29,9 +29,9 @@ export function setup() {
 }
 
 export const options = {
-  vus: __ENV.vus,
-  //duration: __ENV.duration,
-  iterations: __ENV.iterations,
+  vus: __ENV.VUS,
+  //duration: __ENV.DURATION,
+  iterations: __ENV.ITERATIONS,
   // discardResponseBodies: true,
   summaryTrendStats: ['avg', 'min', 'med', 'max', 'p(90)', 'p(95)', 'p(99)', 'p(99.9)', 'count'],
 };
