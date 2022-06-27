@@ -8,6 +8,7 @@ let body = readlocalFile(__ENV.body);
 let proto_path = __ENV.proto_path;
 let proto_file = __ENV.proto_file;
 
+console.log(proto_path);
 parseProtoPath(proto_path);
 const client = new grpc.Client();
 client.load(parseProtoPath(proto_path), proto_file);
