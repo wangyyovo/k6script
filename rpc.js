@@ -12,6 +12,7 @@ const client = new grpc.Client();
 client.load(parseProtoPath(proto_path), proto_file);
 const grpcReqConnectingTrend = new Trend('grpc_req_connecting', true);
 
+console.log(__ENV.proto_path);
 
 export function setup() {
   body = body || readRemoteFile(__ENV.body)
@@ -79,8 +80,6 @@ function parseProtoPath(paths) {
   for (let index = 0; index < dirs.length; index++) {
     result[index] = __ENV.cur_dir + dirs[index];
   }
-  
-  result[result.lenth] =`${__ENV.cur_dir}/third_party}`
 
   return result;
 }
