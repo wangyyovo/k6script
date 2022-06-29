@@ -58,6 +58,7 @@ export function teardown () {
 function readlocalFile(fileName) {
   let body;
   fileName = `${__ENV.cur_dir}/${fileName}`
+  console.log(fileName);
   if ((fileName.indexOf("http://")==-1) && (fileName.indexOf("https://")==-1)) {
     body = JSON.parse(open(fileName));
   }
