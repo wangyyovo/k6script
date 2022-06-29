@@ -4,6 +4,7 @@ import { Trend } from 'k6/metrics';
 import { check } from 'k6';
 import http from 'k6/http';
 console.log(__ENV.proto_path);
+console.log(__ENV.cur_dir);
 let body = readlocalFile(__ENV.body);
 let proto_path = __ENV.proto_path;
 let proto_file = __ENV.proto_file;
