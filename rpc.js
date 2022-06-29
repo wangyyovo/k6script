@@ -3,8 +3,7 @@ import exec from 'k6/execution';
 import { Trend } from 'k6/metrics';
 import { check } from 'k6';
 import http from 'k6/http';
-console.log(__ENV.proto_path);
-console.log(__ENV.cur_dir);
+
 let body = readlocalFile(__ENV.body);
 let proto_path = __ENV.proto_path;
 let proto_file = __ENV.proto_file;
@@ -13,9 +12,10 @@ const client = new grpc.Client();
 client.load(parseProtoPath(proto_path), proto_file);
 const grpcReqConnectingTrend = new Trend('grpc_req_connecting', true);
 
-
-
 export function setup() {
+  console.log(__ENV.proto_path);
+  console.log(__ENV.cur_dir);
+  
   body = body || readRemoteFile(__ENV.body)
   let url = __ENV.url;
   let address = __ENV.address;
