@@ -12,12 +12,7 @@ export function setup() {
   body = body || readRemoteFile(__ENV.body)
   const method = __ENV.method;
   const url = __ENV.url;
- // const headers = JSON.parse(__ENV.header);
-
- const headers = {
-  "Content-Type":"application/json"
- }
-
+  const headers = JSON.parse(__ENV.header);
   return {url,method,body,headers}
 }
 
@@ -55,7 +50,7 @@ export default function (data) {
 function readlocalFile(fileName) {
   let body;
   if ((fileName.indexOf("http://")==-1) && (fileName.indexOf("https://")==-1)) {
-    fileName = `${__ENV.cur_dir}/${fileName}`
+    fileName = `${__ENV.test_dir}/${fileName}`
     body = JSON.parse(open(fileName));
   }
   return body
