@@ -13,13 +13,9 @@ client.load(parseProtoPath(proto_path), proto_file);
 const grpcReqConnectingTrend = new Trend('grpc_req_connecting', true);
 
 export function setup() {
-  console.log(__ENV.proto_path);
-  console.log(__ENV.cur_dir);
-  
-  body = body || readRemoteFile(__ENV.body)
+  body = body || readRemoteFile(__ENV.body);
   let url = __ENV.url;
   let address = __ENV.address;
-
   return {body,url,address}
 }
 
@@ -57,8 +53,7 @@ export function teardown () {
 
 function readlocalFile(fileName) {
   let body;
-  fileName = `${__ENV.cur_dir}/${fileName}`
-  console.log(fileName);
+  fileName = `${__ENV.test_dir}/${fileName}`
   if ((fileName.indexOf("http://")==-1) && (fileName.indexOf("https://")==-1)) {
     body = JSON.parse(open(fileName));
   }
@@ -80,7 +75,7 @@ function parseProtoPath(paths) {
   let dirs = paths.split(',');
 
   for (let index = 0; index < dirs.length; index++) {
-    result[index] = __ENV.cur_dir + dirs[index];
+    result[index] = __ENV.project_dir + dirs[index];
   }
 
   return result;
