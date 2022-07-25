@@ -75,7 +75,7 @@ function parseProtoPath(paths) {
   let dirs = paths.split(',');
 
   for (let index = 0; index < dirs.length; index++) {
-    result[index] = __ENV.project_dir + dirs[index];
+    result[index] = __ENV.test_dir + "/" + dirs[index];
   }
 
   return result;
