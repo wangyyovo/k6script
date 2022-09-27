@@ -1,8 +1,11 @@
 import grpc from 'k6/net/grpc';
 import exec from 'k6/execution';
 import { Trend } from 'k6/metrics';
+import crypto from 'k6/crypto';
 import { check } from 'k6';
 import http from 'k6/http';
+import { htmlReport } from "https://ghproxy.com/raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
+import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
 
 let body = readlocalFile(__ENV.body);
 let proto_path = __ENV.proto_path;
@@ -16,7 +19,23 @@ export function setup() {
   body = body || readRemoteFile(__ENV.body);
   let url = __ENV.url;
   let address = __ENV.address;
-  return {body,url,address}
+
+  let timestamp =  Math.floor(new Date().getTime() / 1000).toString()
+  let username = __ENV.un
+  let method = "/"+__ENV.op
+  let passwd = __ENV.pd
+  let hash = crypto.md5(method+JSON.stringify(body)+timestamp+username+passwd, 'hex');
+
+  let params = {
+      metadata: {
+          'x-md-local-username': username,
+          'x-md-local-method': method,
+          'x-md-local-time': timestamp,
+          'x-md-local-hash': hash
+      },
+  };
+
+  return {body,url,address,params}
 }
 
 export const options = {
@@ -31,14 +50,14 @@ export default (data) => {
 
     let startTime = new Date() - new Date(exec.scenario.startTime);
     client.connect(data.address, {
-      plaintext: true // 鏈嶅姟鍣ㄦ病鏈夐厤缃瘉涔﹂渶瑕佸皢plaintext璁句负true,榛樿鏄痜alse
+      plaintext: true // 服务器没有配置证书需要将plaintext设为true,默认是false
     });
     let endTime = new Date() - new Date(exec.scenario.startTime);
 
     grpcReqConnectingTrend.add(endTime - startTime);
   }
 
-  const response = client.invoke(data.url, data.body);
+  const response = client.invoke(data.url, data.body,data.params);
 
   check(response, {
     'status is OK': (r) => r && r.status === grpc.StatusOK,
@@ -79,4 +98,12 @@ function parseProtoPath(paths) {
   }
 
   return result;
+}
+
+
+export function handleSummary(data) {
+  return {
+    'result.html': htmlReport(data),
+    stdout: textSummary(data, { indent: " ", enableColors: true }),
+  };
 }
